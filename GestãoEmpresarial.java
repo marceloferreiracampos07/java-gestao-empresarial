@@ -163,5 +163,37 @@ public class GestãoEmpresarial {
             double salarioFinal = getSalario() + this.comissao;
             System.out.println("Vendedor: " + getNome() + " | Comissão (4%): R$ " + comissao + " | Salário Final: R$ " + salarioFinal);
         }
+        
+    }
+    public static void main(String[] args) {
+        System.out.println("=== TESTE DE FOLHA DE PAGAMENTO (POLIMORFISMO) ===");
+
+        Funcionario gerente = new Gerente("Carlos Silva", "12345678901", 6000.0, 1500.0);
+        Funcionario dev = new Desenvolvedor("Marcelo Júnior", "98765432100", 4500.0, 800.0);
+        Funcionario estagiario = new Estagiario("Lucas Alves", "11122233344", 1200.0, 400.0);
+        Vendedor vendedor = new Vendedor("Ana Souza", "55566677788", 2500.0, 0.0);
+
+
+        vendedor.calcularComissao(1000.0, 2500.0, 1500.0);
+
+
+        Funcionario[] equipe = {gerente, dev, estagiario, vendedor};
+
+        for (Funcionario f : equipe) {
+            f.calcularSalario();
+        }
+
+        System.out.println("\n=== TESTE DE VALIDAÇÕES (FAIL-FAST) ===");
+        try {
+            new Gerente("Erro CPF", "123", 5000.0, 500.0);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Bloqueado com sucesso: " + e.getMessage());
+        }
+
+        try {
+            new Desenvolvedor("Erro Salário", "12345678901", -1000.0, 0.0);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Bloqueado com sucesso: " + e.getMessage());
+        }
     }
 }
